@@ -1,0 +1,15 @@
+Source: carma-base
+Section: carma
+Priority: optional
+Maintainer: Alexander Danilov <alexander.a.danilov@gmail.com>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.4.1
+Homepage: https://github.com/ruamk/carma-dev
+#Vcs-Browser: https://salsa.debian.org/debian/carma-base
+#Vcs-Git: https://salsa.debian.org/debian/carma-base.git
+
+Package: carma-base
+Architecture: all
+Depends: ${misc:Depends}
+Description: Base files for CaRMa.
+ Base files and directories for CaRMa.
