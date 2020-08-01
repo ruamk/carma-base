@@ -1,3 +1,15 @@
+carma-base (0.3-1) unstable; urgency=medium
+
+  * Add carma-backup script.
+
+ -- Alexander Danilov <alexander.a.danilov@gmail.com>  Sat, 01 Aug 2020 15:50:02 +0300
+
+carma-base (0.2-1) unstable; urgency=medium
+
+  * Add rc.carma.functions with create pid dir function
+
+ -- Alexander Danilov <alexander.a.danilov@gmail.com>  Fri, 31 Jul 2020 22:43:52 +0300
+
 carma-base (0.1-1) unstable; urgency=medium
 
   * Initial release.

@@ -1,0 +1,15 @@
+#! /bin/sh -e
+
+PIDDIR=/run/carma
+
+. /etc/default/carma
+
+carma_setup_dirs () {
+    if [ ! -d $PIDDIR ];
+    then
+	mkdir -p $PIDDIR
+	chown $CARMA_USER $PIDDIR
+	chgrp $CARMA_USER $PIDDIR
+    fi
+}
+

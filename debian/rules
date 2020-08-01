@@ -21,4 +21,10 @@
 override_dh_auto_install:
 	install -d $(CURDIR)/debian/carma-base/etc/carma
 	dh_installdocs README.md
+	install -d $(CURDIR)/debian/carma-base/usr/lib/carma
+	dh_install rc.carma.functions usr/lib/carma
+	install -d $(CURDIR)/debian/carma-base/usr/bin
+	dh_install carma-backup usr/bin
+
+
 
