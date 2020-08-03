@@ -24,6 +24,7 @@ case "$1" in
 	getent group carma >/dev/null 2>&1 || addgroup --system carma
         install -d -o carma -g carma /run/carma
         chown carma:carma /etc/carma
+	install -d -o carma -g postgres -m 770 /var/backups/carma
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

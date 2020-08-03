@@ -2,15 +2,6 @@
 
 . /etc/default/carma-base
 
-if [ ! -d $BACKUP_DIR ];
-then
-    mkdir -p $BACKUP_DIR
-fi
-
-chown $CARMA_USER $BACKUP_DIR
-chgrp $CARMA_USER $BACKUP_DIR
-chmod 700 $BACKUP_DIR
-
 filename=$(date +%Y-%m-%d_%H-%M).sql.bz2
-pg_dumpall -d BACKUP_CONNECTION | lbzip2 -9 -n $BACKUP_THREADS >$BACKUP_DIR/$filename
+pg_dumpall -d $BACKUP_CONNECTION | lbzip2 -9 -n $BACKUP_THREADS >$BACKUP_DIR/$filename
 

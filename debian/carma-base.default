@@ -1,3 +1,4 @@
+CARMA_USER=carma
 BACKUP_CONNECTION=postgresql://localhost:5432
 BACKUP_DIR=/var/backups/carma
 BACKUP_THREADS=4
