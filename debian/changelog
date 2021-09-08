@@ -1,3 +1,9 @@
+carma-base (0.4-1) unstable; urgency=medium
+
+  * Add logrotate conf file.
+
+ -- Alexander Danilov <alexander.a.danilov@gmail.com>  Fri, 28 Aug 2020 20:16:35 +0300
+
 carma-base (0.3-1) unstable; urgency=medium
 
   * Add carma-backup script.

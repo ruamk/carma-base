@@ -1,0 +1,11 @@
+/var/log/carma/*.log {                                                                                                                                                       
+        weekly                                                                                                                                                               
+        missingok                                                                                                                                                            
+        rotate 10                                                                                                                                                            
+        copytruncate                                                                                                                                                         
+        delaycompress                                                                                                                                                        
+        compress                                                                                                                                                             
+        notifempty                                                                                                                                                           
+        missingok                                                                                                                                                            
+}
+
