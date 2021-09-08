@@ -1,0 +1,141 @@
+#! /bin/sh
+# \
+exec tclsh8.6 "$0" ${1+"$@"}
+
+# (c) 2021 Alexander Danilov <alexander.a.danilov@gmail.com>
+# This script requires:
+# - tcl8.6
+# - tcllib
+
+package require mime
+
+
+proc mime::text_decode {text} {
+    # remove newline and space before it
+    set text [regsub -all {(\?=)\n (=\?[^?]+?\?.\?)} $text {\1\2}]
+
+    while 1 {
+        set range [regexp -inline -indices -- {=\?[^?]+\?.\?[^?]*\?=} $text]
+
+        if {$range eq {}} break
+
+        foreach {b e} [lindex $range 0] break
+
+        foreach {charset encoding word}\
+            [mime::word_decode [string range $text $b $e]] break
+
+        set text [string replace $text $b $e\
+                  [::encoding convertfrom $charset $word]]
+    }
+    return $text
+}
+
+
+proc toText {argv} {
+    foreach {k v} [dict get $argv headers] {
+        puts "$k: $v"
+    }
+    puts ""
+    puts [dict get $argv body]
+}
+
+
+proc toHtml {argv} {
+    puts "<html><head></head><body><table>"
+    foreach {k v} [dict get $argv headers] {
+       puts "<tr><td><b>$k:</b></td><td>$v</td></tr>"
+    }
+    puts "</table>"
+    puts "<pre>[dict get $argv body]</pre>"
+    puts "</body></html>"
+}
+
+
+proc findTextPart {m} {
+    if {"parts" in [mime::getproperty $m -names]} {
+        foreach part [mime::getproperty $m parts] {
+            set r [findTextPart $part]
+            if {$r ne ""} {
+                return $r
+            }
+        }
+    } else {
+        if {[mime::getproperty $m content] eq "text/plain"} {
+            return $m
+        } else {
+            return
+        }
+    }
+}
+
+
+proc main {args} {
+    set headers {Date From Subject}
+    set format text
+
+    foreach {k v} $args {
+        switch -- $k {
+            --header {
+                lappend headers $v
+            }
+
+            --format {
+                switch -- $format {
+                    text - html {
+                        set format $v
+                    }
+                    default {
+                        puts stderr "Invalid format $v"
+                    }
+                }
+            }
+
+            default {
+                puts stderr "Usage: $::argv0 ?--header value ...? ?--format text|html?"
+                puts stderr "Default headers: Date From Subject"
+                puts stderr "Default format: -text"
+                exit 1
+            }
+        }
+    }
+
+    set msg [read stdin]
+
+    set m [mime::initialize -string $msg]
+
+    array set doc {headers {} body ""}
+
+    set textPart [findTextPart $m]
+
+    if {$textPart ne ""} {
+        foreach h $headers {
+            set params [mime::getproperty $textPart params]
+            set txt [join [lindex [mime::getheader $m $h] 0] {}]
+            if {[dict exists $params charset]} {
+                lappend doc(headers) $h [mime::text_decode $txt]
+            } else {
+                lappend doc(headers) $h $txt 
+            }
+        }
+        if {[llength $doc(headers)] == 0} {
+            puts stderr "0 headers found: [mime::getheader $m -names]"
+        }
+        set doc(body) [mime::getbody $textPart -decode]
+        switch -- $format {
+            text {
+                puts [toText [array get doc]]
+            }
+            
+            html {
+                puts [toHtml [array get doc]]
+            }
+            default {
+                puts stderr "Invalid format $format"
+            }
+        }
+    }
+
+    mime::finalize $m
+}
+
+main {*}$argv

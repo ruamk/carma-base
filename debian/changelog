@@ -1,3 +1,9 @@
+carma-base (0.5) UNRELEASED; urgency=medium
+
+  * Add carma-mail-converter script.
+
+ -- Alexander Danilov <daapp@carma.ruamc.ru>  Wed, 08 Sep 2021 16:06:07 +0300
+
 carma-base (0.4-1) unstable; urgency=medium
 
   * Add logrotate conf file.

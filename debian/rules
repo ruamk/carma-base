@@ -25,4 +25,5 @@ override_dh_auto_install:
 	dh_install rc.carma.functions usr/lib/carma
 	install -d $(CURDIR)/debian/carma-base/usr/bin
 	dh_install carma-backup usr/bin
+	dh_install carma-mail-converter usr/bin
 
