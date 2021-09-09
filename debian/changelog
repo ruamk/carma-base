@@ -1,3 +1,9 @@
+carma-base (0.5.1) UNRELEASED; urgency=medium
+
+  * carma-mail-converter: add charset to html output.
+
+ -- Alexander Danilov <daapp@carma.ruamc.ru>  Thu, 09 Sep 2021 12:39:20 +0300
+
 carma-base (0.5) UNRELEASED; urgency=medium
 
   * Add carma-mail-converter script.
