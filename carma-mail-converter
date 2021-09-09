@@ -41,7 +41,7 @@ proc toText {argv} {
 
 
 proc toHtml {argv} {
-    puts "<html><head></head><body><table>"
+    puts "<html><head><meta charset='UTF-8'></head><body><table>"
     foreach {k v} [dict get $argv headers] {
        puts "<tr><td><b>$k:</b></td><td>$v</td></tr>"
     }
